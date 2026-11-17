@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework.Constraints;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,11 +40,46 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (isRecording)
         {
             RecordKeys();
         }
+    }
+
+    // GAMEPLAY =================
+
+    bool playingBeat;
+    [SerializeField] AudioSource audioSource;
+
+    public void StartGame()
+    {
+        if (playingBeat) return;
+        playingBeat = true;
+
+        convoCount = 0;
+        scoreCount = 0;
+
+        audioSource.Play();
+        StartCoroutine("LaunchCicle");
+    }
+    public void GameOver()
+    {
+        playingBeat = false;
+        audioSource.Stop();
+        //TODO: mostar ending 
+    }
+
+    public void Hit()
+    {
+        convoCount++;
+        scoreCount += 5;
+        scoreTMP.text = "Puntaje: " + scoreCount;
+        convoTMP.text = "Convo: " + convoCount;
+    }
+    public void Miss()
+    {
+        convoCount = 0;
+        convoTMP.text = " _ ";
     }
 
     // Recording ===============================================================================
@@ -69,63 +106,38 @@ public class GameManager : MonoBehaviour
     [Header("Song Data")]
     [SerializeField] List<Beat> beats;
     bool isRecording = false;
-    float startTime;
+    float recordingStartTime;
 
     public void StartRecording()
     {
         beats = new List<Beat>();
         isRecording = true;
-        startTime = Time.time;
+        recordingStartTime = Time.time;
 
         audioSource.Play();
     }
-
 
     private void RecordKeys()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            beats.Add(new Beat(Beat.TrashType.Paper, Time.time - startTime - travelTime));
+            beats.Add(new Beat(Beat.TrashType.Paper, Time.time - recordingStartTime - travelTime));
             Debug.Log("Key Recorded: " + Beat.TrashType.Paper);
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            beats.Add(new Beat(Beat.TrashType.Plastic, Time.time - startTime - travelTime));
+            beats.Add(new Beat(Beat.TrashType.Plastic, Time.time - recordingStartTime - travelTime));
             Debug.Log("Key Recorded: " + Beat.TrashType.Plastic);
         }
         else if (Input.GetKeyDown(KeyCode.J))
         {
-            beats.Add(new Beat(Beat.TrashType.Aluminum, Time.time - startTime - travelTime));
+            beats.Add(new Beat(Beat.TrashType.Aluminum, Time.time - recordingStartTime - travelTime));
             Debug.Log("Key Recorded: " + Beat.TrashType.Aluminum);
         }
     }
 
 
-    // GAMEPLAY =================
-
-    bool playingBeat;
-    [SerializeField] AudioSource audioSource;
-
-    public void StartGame()
-    {
-        if(playingBeat) return;
-        playingBeat = true;
-        convoCount = 0;
-        scoreCount = 0;
-        audioSource.Play();
-        StartCoroutine("LaunchCicle");
-        // reproducir la musica
-        // corutina de spawn de objetos
-    }
-
-    public void GameOver()
-    {
-        playingBeat = false;
-        audioSource.Stop();
-        //TODO: mostar ending 
-    }
-
-
+    // TRASH LAUNCHING ===============================================================================
     [Header("Trash Spawn")]
     [SerializeField] float travelTime;
     [SerializeField] Transform launchPoint;
@@ -140,7 +152,7 @@ public class GameManager : MonoBehaviour
         GameObject item = Instantiate(trashItemPrefab, launchPoint.position, Quaternion.Euler(new Vector3(0, 0, -15)));
         Rigidbody2D rigidbody2D = item.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(direction * launchForce, ForceMode2D.Impulse);
-        Destroy(item, 2f);
+        Destroy(item, 2.3f);
     }
 
     IEnumerator LaunchCicle()
@@ -151,7 +163,6 @@ public class GameManager : MonoBehaviour
             foreach (var b in beats)
             {
                 float delay = b.time - prevTime;
-                Debug.Log(delay);
                 prevTime = b.time;
                 yield return new WaitForSecondsRealtime(delay);
                 GameObject item = null;
