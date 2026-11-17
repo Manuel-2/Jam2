@@ -35,7 +35,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject PauseMenu;
     [SerializeField] GameObject InGameMenu;
     [SerializeField] GameObject MainMenu;
-    void PauseGame()
+    [SerializeField] GameObject EndingMenu;
+    public void PauseGame()
     {
         PauseMenu.SetActive(true);
         InGameMenu.SetActive(false);
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
         // TODO: DETENER la cancion y desactivar controles
     }
 
-    void ResumeGame()
+    public void ResumeGame()
     {
         PauseMenu.SetActive(false);
         InGameMenu.SetActive(true);
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
         // TODO: Continuar
     }
 
-    void ReturnMainMenu()
+    public void ReturnMainMenu()
     {
         PauseMenu.SetActive(false);
         InGameMenu.SetActive(false);
@@ -63,6 +64,5 @@ public class GameManager : MonoBehaviour
         MainMenu.SetActive(true);
 
         // TODO: Reiniciar
-
     }
 }
