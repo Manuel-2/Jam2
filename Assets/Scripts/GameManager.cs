@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
         }
 
         playingBeat = false;
+        record = PlayerPrefs.GetInt("record", 0);
+        recordTMP.text = "Record: " + record;
     }
 
 
@@ -70,13 +72,17 @@ public class GameManager : MonoBehaviour
     {
         playingBeat = false;
         audioSource.Stop();
+        if (scoreCount > record)
+        {
+            PlayerPrefs.SetInt("record", scoreCount);
+        }
         //TODO: mostar ending 
     }
 
     public void Hit()
     {
         convoCount++;
-        scoreCount += 5;
+        scoreCount += convoCount;
 
         SetConvo(convoCount);
         SetScore(scoreCount);
@@ -184,6 +190,7 @@ public class GameManager : MonoBehaviour
                 }
                 LaunchTrashItem(item);
             }
+            yield return new WaitForSecondsRealtime(2f);
             GameOver();
         }
     }
@@ -192,7 +199,9 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] TextMeshProUGUI convoTMP;
     [SerializeField] TextMeshProUGUI scoreTMP;
+    [SerializeField] TextMeshProUGUI recordTMP;
 
+    int record = 0;
     private void SetConvo(int convoCount)
     {
         convoTMP.text = "Combo: " + convoCount;
@@ -201,6 +210,11 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         scoreTMP.text = "Puntaje: " + score;
+
+        if (score > record)
+        {
+            recordTMP.text = "Record: " + score;
+        }
     }
 
 
