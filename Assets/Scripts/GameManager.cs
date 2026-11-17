@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("record", scoreCount);
         }
-        //TODO: mostar ending 
+        canvasAnimator.SetTrigger("end");
     }
 
     public void Hit()
@@ -219,39 +219,10 @@ public class GameManager : MonoBehaviour
 
 
     // Game Flow ===============================================================================
-    [Space]
-    [SerializeField] GameObject PauseMenu;
-    [SerializeField] GameObject InGameMenu;
-    [SerializeField] GameObject MainMenu;
-    [SerializeField] GameObject EndingMenu;
-    public void PauseGame()
-    {
-        PauseMenu.SetActive(true);
-        InGameMenu.SetActive(false);
-
-        MainMenu.SetActive(false);
-
-        // TODO: DETENER la cancion y desactivar controles
-    }
-
-    public void ResumeGame()
-    {
-        PauseMenu.SetActive(false);
-        InGameMenu.SetActive(true);
-
-        MainMenu.SetActive(false);
-
-        // TODO: Continuar
-    }
 
     public void ReturnMainMenu()
     {
-        PauseMenu.SetActive(false);
-        InGameMenu.SetActive(false);
-
-        MainMenu.SetActive(true);
-
-        // TODO: Reiniciar
+        canvasAnimator.SetTrigger("return");
     }
 
     public void ExitGame()
