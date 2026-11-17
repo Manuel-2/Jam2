@@ -51,14 +51,18 @@ public class GameManager : MonoBehaviour
     bool playingBeat;
     [SerializeField] AudioSource audioSource;
 
+    [SerializeField] Animator canvasAnimator;
     public void StartGame()
     {
         if (playingBeat) return;
-        playingBeat = true;
-
         convoCount = 0;
         scoreCount = 0;
+        SetConvo(convoCount);
+        SetScore(scoreCount);
 
+        canvasAnimator.SetTrigger("InGame");
+
+        playingBeat = true;
         audioSource.Play();
         StartCoroutine("LaunchCicle");
     }
@@ -80,9 +84,8 @@ public class GameManager : MonoBehaviour
     public void Miss()
     {
         convoCount = 0;
-        convoTMP.text = " ";
+        SetConvo(convoCount);
     }
-
     // Recording ===============================================================================
     [Serializable]
     private class Beat
@@ -236,4 +239,10 @@ public class GameManager : MonoBehaviour
 
         // TODO: Reiniciar
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 }
