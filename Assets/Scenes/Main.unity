@@ -3904,9 +3904,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaeab2b2a48b50baabbeb7f638083c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  travelTime: 1.25
   launchPoint: {fileID: 348426845}
-  direction: {x: 1, y: 1}
-  launchForce: 8.9
+  direction: {x: 1, y: 0.5}
+  launchForce: 12.5
   trashItemPrefab: {fileID: 6913107249560326409, guid: 1d52852bf35e604ffa3f1f69ea5db1d7, type: 3}
   convoTMP: {fileID: 1268616001}
   scoreTMP: {fileID: 1424729617}
@@ -4978,6 +4979,7 @@ GameObject:
   - component: {fileID: 1645199338}
   - component: {fileID: 1645199337}
   - component: {fileID: 1645199339}
+  - component: {fileID: 1645199340}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -5105,6 +5107,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2153854, y: 2.39}
   m_EdgeRadius: 0
+--- !u!114 &1645199340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645199336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a0b7113ef9e8e1ba9ae8ce95ef286e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CounterTest
 --- !u!1 &1723176964
 GameObject:
   m_ObjectHideFlags: 0

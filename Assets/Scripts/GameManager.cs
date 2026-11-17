@@ -53,16 +53,18 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Trash Spawn")]
+    [SerializeField] float travelTime;
     [SerializeField] Transform launchPoint;
     [SerializeField] Vector2 direction;
     [SerializeField] float launchForce;
     [SerializeField] GameObject trashItemPrefab;
     public void LaunchTrashItem()
     {
-        GameObject item = Instantiate(trashItemPrefab, launchPoint.position, Quaternion.identity);
+        travelTime = Time.time;
+        GameObject item = Instantiate(trashItemPrefab, launchPoint.position, Quaternion.Euler(new Vector3(0, 0, -15)));
         Rigidbody2D rigidbody2D = item.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(direction * launchForce, ForceMode2D.Impulse);
-        rigidbody2D.AddForceAtPosition(Vector2.right * 0.2f, Vector2.up);
+        // rigidbody2D.AddForceAtPosition(Vector2.right * 0.2f, Vector2.up);
         Destroy(item, 2f);
     }
 
