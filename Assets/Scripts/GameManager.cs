@@ -73,13 +73,14 @@ public class GameManager : MonoBehaviour
     {
         convoCount++;
         scoreCount += 5;
-        scoreTMP.text = "Puntaje: " + scoreCount;
-        convoTMP.text = "Convo: " + convoCount;
+
+        SetConvo(convoCount);
+        SetScore(scoreCount);
     }
     public void Miss()
     {
         convoCount = 0;
-        convoTMP.text = " _ ";
+        convoTMP.text = " ";
     }
 
     // Recording ===============================================================================
@@ -191,7 +192,7 @@ public class GameManager : MonoBehaviour
 
     private void SetConvo(int convoCount)
     {
-        convoTMP.text = "Convo: " + convoCount;
+        convoTMP.text = "Combo: " + convoCount;
     }
 
     private void SetScore(int score)
