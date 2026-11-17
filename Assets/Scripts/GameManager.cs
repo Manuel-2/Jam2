@@ -85,17 +85,17 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            beats.Add(new Beat(Beat.TrashType.Paper, Time.time - startTime));
+            beats.Add(new Beat(Beat.TrashType.Paper, Time.time - startTime - travelTime));
             Debug.Log("Key Recorded: " + Beat.TrashType.Paper);
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            beats.Add(new Beat(Beat.TrashType.Plastic, Time.time - startTime));
+            beats.Add(new Beat(Beat.TrashType.Plastic, Time.time - startTime - travelTime));
             Debug.Log("Key Recorded: " + Beat.TrashType.Plastic);
         }
         else if (Input.GetKeyDown(KeyCode.J))
         {
-            beats.Add(new Beat(Beat.TrashType.Aluminum, Time.time - startTime));
+            beats.Add(new Beat(Beat.TrashType.Aluminum, Time.time - startTime - travelTime));
             Debug.Log("Key Recorded: " + Beat.TrashType.Aluminum);
         }
     }
@@ -104,23 +104,24 @@ public class GameManager : MonoBehaviour
     // GAMEPLAY =================
 
     bool playingBeat;
-    [SerializeField] AudioClip clip;
     [SerializeField] AudioSource audioSource;
 
     public void StartGame()
     {
+        if(playingBeat) return;
+        playingBeat = true;
         convoCount = 0;
         scoreCount = 0;
-        playingBeat = true;
+        audioSource.Play();
         StartCoroutine("LaunchCicle");
         // reproducir la musica
         // corutina de spawn de objetos
     }
 
-    public void StopGame()
+    public void GameOver()
     {
         playingBeat = false;
-
+        audioSource.Stop();
         //TODO: mostar ending 
     }
 
@@ -136,21 +137,23 @@ public class GameManager : MonoBehaviour
 
     public void LaunchTrashItem(GameObject trashItemPrefab)
     {
-        travelTime = Time.time;
         GameObject item = Instantiate(trashItemPrefab, launchPoint.position, Quaternion.Euler(new Vector3(0, 0, -15)));
         Rigidbody2D rigidbody2D = item.GetComponent<Rigidbody2D>();
         rigidbody2D.AddForce(direction * launchForce, ForceMode2D.Impulse);
-        // rigidbody2D.AddForceAtPosition(Vector2.right * 0.2f, Vector2.up);
         Destroy(item, 2f);
     }
 
     IEnumerator LaunchCicle()
     {
+        float prevTime = 0;
         while (playingBeat)
         {
             foreach (var b in beats)
             {
-                yield return new WaitForSeconds(b.time);
+                float delay = b.time - prevTime;
+                Debug.Log(delay);
+                prevTime = b.time;
+                yield return new WaitForSecondsRealtime(delay);
                 GameObject item = null;
                 switch (b.type)
                 {
@@ -166,6 +169,7 @@ public class GameManager : MonoBehaviour
                 }
                 LaunchTrashItem(item);
             }
+            GameOver();
         }
     }
 

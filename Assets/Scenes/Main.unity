@@ -3905,8 +3905,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaeab2b2a48b50baabbeb7f638083c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  beats: []
-  clip: {fileID: 0}
+  beats:
+  - type: 0
+    time: 3.476581
+  - type: 0
+    time: 3.631277
+  - type: 0
+    time: 3.9890008
+  - type: 0
+    time: 4.1309566
+  - type: 0
+    time: 5.722406
+  - type: 0
+    time: 6.3639283
+  - type: 0
+    time: 7.0888257
+  - type: 0
+    time: 7.7716937
+  - type: 0
+    time: 8.496824
+  - type: 0
+    time: 9.25511
+  - type: 0
+    time: 9.9539585
+  - type: 0
+    time: 10.66246
+  - type: 0
+    time: 11.395824
+  - type: 0
+    time: 12.154377
+  - type: 0
+    time: 12.912626
+  - type: 0
+    time: 13.637766
+  - type: 0
+    time: 14.554127
+  - type: 0
+    time: 15.220924
+  - type: 0
+    time: 15.837358
+  - type: 0
+    time: 16.012705
+  - type: 0
+    time: 16.2628
+  - type: 0
+    time: 16.437483
+  - type: 0
+    time: 16.586864
+  - type: 0
+    time: 16.720484
   audioSource: {fileID: 1134241112}
   travelTime: 1.25
   launchPoint: {fileID: 348426845}
@@ -3933,9 +3980,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: b7d7ee9f3bab5f67d9b09abb6755738c, type: 3}
+  m_Resource: {fileID: 8300000, guid: f7e9cd6d07698ae908f8a7268a9d5fa6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5083,7 +5130,6 @@ GameObject:
   - component: {fileID: 1645199338}
   - component: {fileID: 1645199337}
   - component: {fileID: 1645199339}
-  - component: {fileID: 1645199340}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -5211,18 +5257,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2153854, y: 2.39}
   m_EdgeRadius: 0
---- !u!114 &1645199340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1645199336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a0b7113ef9e8e1ba9ae8ce95ef286e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CounterTest
 --- !u!1 &1723176964
 GameObject:
   m_ObjectHideFlags: 0
